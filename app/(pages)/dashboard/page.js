@@ -54,18 +54,11 @@ export default function Home() {
         }
         fetchData();
     }, []);
-
-
-
-
-
-
     return (
         <div>
             <header>
                 <h1>StudySphere</h1>
             </header>
-
             <nav>
                 <UserButton />
                 <a href="#">Profile</a>
@@ -86,7 +79,6 @@ export default function Home() {
                     ))}
                 </div>
             </div>
-
             <footer style={{ marginTop: '50px' }}>
                 <p>&copy; 2024 Your Programming Course Website. All rights reserved.</p>
             </footer>
