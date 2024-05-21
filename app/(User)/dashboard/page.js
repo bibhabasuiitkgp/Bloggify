@@ -7,38 +7,7 @@ import Book from '../../../Components/Card_container';
 import { useState, useEffect } from 'react';
 // import { useRouter } from 'next/router';
 export default function Home() {
-    // const router = useRouter();
-    const Books = [
-        {
-            img: 'https://5.imimg.com/data5/HX/TD/MY-14344381/nootan-physics-xii-book-500x500.png',
-            subject: 'Physics',
-            description: 'Learn the fundamentals of HTML including tags, attributes, and semantic markup.',
-            price: 50,
-            author: 'Asish Sir',
-        },
-        {
-            img: 'https://shribalajibooks.com/wp-content/uploads/2022/12/Simplified-Physics-10-1.jpg',
-            subject: 'Chemistry',
-            description: 'Master CSS styling techniques such as selectors, box model, flexbox, and grid.',
-            price: 50,
-            author: 'Asish Sir',
-        },
-        {
-            img: 'https://5.imimg.com/data5/HX/TD/MY-14344381/nootan-physics-xii-book-500x500.png',
-            subject: 'Mathematics',
-            description: 'Explore the core concepts of JavaScript including variables, functions, and loops.',
-            price: 50,
-            author: 'Asish Sir',
-        },
-    ];
-
-
-
-
     const [books, setBooks] = useState([]);
-
-
-
     useEffect(() => {
         async function fetchData() {
             try {
@@ -57,7 +26,7 @@ export default function Home() {
     return (
         <div>
             <header>
-                <h1>StudySphere</h1>
+                <h1>BookWagon</h1>
             </header>
             <nav>
                 <UserButton />

@@ -1,64 +1,65 @@
 "use client"
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./styles.css"
+import { useRouter } from "next/navigation";
 
 const Buy = ({ makePayment }) => {
+  const router = useRouter();
+  // const { subject, description, price, author } = router.query;
+  const [isLoading, setIsLoading] = useState(false);
+  const [book, setBook] = useState(null);
 
-    const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    const storedBook = localStorage.getItem('selectedBook');
+    if (storedBook) {
+      setBook(JSON.parse(storedBook));
+    }
+  }, []);
+
+  if (!book) {
+    return <div>No book selected</div>;
+  }
+
+  const { img, subject, description, price, author } = book;
 
 
-
-    return (
-        <div>
-            <main>
+  return (
+    <div>
+      <main>
         <div className="card">
           <div className="card-header">
-            <img src="https://rvs-order-summary-component.netlify.app/images/illustration-hero.svg" alt="" />
+            <img src="/images/29.png" alt="" />
           </div>
           <div className="card-body">
             <div className="card-title">Order Summary</div>
-            <div className="card-text">You can now listen to millions of songs, audiobooks, and podcasts on any device anywhere you like!</div>
+            <div className="card-text">Thank you for purchasing with us. Have a nice day</div>
             <div className="card-plan">
-              <div className="card-plan-img"><img src="https://rvs-order-summary-component.netlify.app/images/icon-music.svg" alt="" /></div>
+              <div className="card-plan-img"><img src="https://cdn-icons-png.freepik.com/256/171/171322.png?semt=ais_hybrid" height={"40px"} width={"40px"} alt="" /></div>
               <div className="card-plan-text">
-                <div className="card-plan-title">Annual Plan</div>
-                <div className="card-plan-price">$59.99/year</div>
+                <div className="card-plan-title">{description}</div>
+                <div className="card-plan-price">${price}</div>
               </div>
-              <div className="card-plan-link"><a href="#!">Change</a></div>
+              {/* <div className="card-plan-link"><a href="#!">Change</a></div> */}
             </div>
             <div className="card-payment-button">
-            <button
+              <button
                 onClick={() => {
-                    makePayment({ productId: "example_ebook" });
+                  makePayment({ productId: "example_ebook" });
                 }}
                 disabled={isLoading}
 
-            >
+              >
                 {isLoading ? 'Processing...' : 'Buy Now'}
-            </button>
+              </button>
             </div>
             <div className="card-cancel-button">
-              <button>Cancel Order</button>
+              <button onClick={() => router.push('/dashboard')}>Cancel Order</button>
             </div>
           </div>
         </div>
       </main>
-
-            {/* <h1>Razor Pay Integration with NextJs 13</h1>
-            <button
-                onClick={() => {
-                    makePayment({ productId: "example_ebook" });
-                }}
-                disabled={isLoading}
-
-            >
-                {isLoading ? 'Processing...' : 'Buy Now'}
-            </button> */}
-
-
-
-        </div>
-    );
+    </div>
+  );
 };
 
 export default Buy;

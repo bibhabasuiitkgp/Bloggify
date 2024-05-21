@@ -4,6 +4,12 @@ import { useRouter } from 'next/navigation';
 const Book = ({ img, subject, description, price, author }) => {
     const router = useRouter();
 
+    const handleBuyNow = () => {
+        const bookData = { img, subject, description, price, author };
+        localStorage.setItem('selectedBook', JSON.stringify(bookData));
+        router.push('/payment');
+    };
+
     return (
         <div className="course">
             <img src={img} alt={`${subject} Course Image`} />
@@ -15,7 +21,7 @@ const Book = ({ img, subject, description, price, author }) => {
                     <p>Author: {author}</p>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
-                    <button className="btn-5" onClick={() => router.push("/payment")} >
+                    <button className="btn-5" onClick={handleBuyNow}>
                         <span>Buy Now</span>
                     </button>
                 </div>
