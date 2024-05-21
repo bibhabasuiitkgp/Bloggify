@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 
-const Course = ({ img, subject, description, price, author }) => {
+const Book = ({ img, subject, description, price, author }) => {
     const router = useRouter();
 
     return (
@@ -24,4 +24,4 @@ const Course = ({ img, subject, description, price, author }) => {
     );
 };
 
-export default Course;
+export default Book;

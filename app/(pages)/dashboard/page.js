@@ -3,11 +3,12 @@
 import "./styles.css"
 import { useRouter } from 'next/navigation';
 import { UserButton } from '@clerk/nextjs';
-import Course from '../../../Components/Card_container';
+import Book from '../../../Components/Card_container';
+import { useState, useEffect } from 'react';
 // import { useRouter } from 'next/router';
 export default function Home() {
     // const router = useRouter();
-    const courses = [
+    const Books = [
         {
             img: 'https://5.imimg.com/data5/HX/TD/MY-14344381/nootan-physics-xii-book-500x500.png',
             subject: 'Physics',
@@ -30,6 +31,35 @@ export default function Home() {
             author: 'Asish Sir',
         },
     ];
+
+
+
+
+    const [books, setBooks] = useState([]);
+
+
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await fetch('/api/get');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch data');
+                }
+                const data = await response.json();
+                setBooks(data.books);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+        fetchData();
+    }, []);
+
+
+
+
+
+
     return (
         <div>
             <header>
@@ -43,14 +73,15 @@ export default function Home() {
             <div className="container">
                 <h2 className="container-heading">Books</h2>
                 <div className="course-list">
-                    {courses.map((course, index) => (
-                        <Course
+                    {books.map((card, index) => (
+                        console.log(card),
+                        <Book
                             key={index}
-                            img={course.img}
-                            subject={course.subject}
-                            description={course.description}
-                            price={course.price}
-                            author={course.author}
+                            img="https://5.imimg.com/data5/HX/TD/MY-14344381/nootan-physics-xii-book-500x500.png"
+                            subject={card.book_name}
+                            description={card.description}
+                            price={card.price}
+                            author={card.author}
                         />
                     ))}
                 </div>
