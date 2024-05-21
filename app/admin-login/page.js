@@ -13,8 +13,8 @@ export default function SignUp() {
     const handleLogin = (e) => {
         e.preventDefault();
         if (username === 'admin' && password === '123') { // Fixed credentials
-            Cookies.set('auth', 'true');
-            router.push('/admin');
+            Cookies.set('auth', 'true');  // Set authentication cookie
+            router.push('/admin');// Redirect to admin page
         } else {
             alert('Invalid credentials');
         }

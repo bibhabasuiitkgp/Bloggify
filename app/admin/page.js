@@ -5,7 +5,9 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 
+// Admin component for managing book data
 export default function Admin() {
+    // State to manage authentication status and book data
     const [authenticated, setAuthenticated] = useState(false);
     const router = useRouter();
     const [bookData, setBookData] = useState({
@@ -16,6 +18,7 @@ export default function Admin() {
         image: ''
     });
 
+    // useEffect to check authentication status on component mount
     useEffect(() => {
         const auth = Cookies.get('auth');
         if (auth === 'true') {
@@ -25,29 +28,35 @@ export default function Admin() {
         }
     }, [router]);
 
+    // Return null if not authenticated to prevent component rendering
     if (!authenticated) {
         return null;
     }
 
+    // handleChange to update book data state on input change
     const handleChange = (e) => {
         const { name, value } = e.target;
         setBookData((prevData) => ({ ...prevData, [name]: value }));
     };
 
+    // handleSubmit to send book data to the server
     const handleSubmit = async (e) => {
         e.preventDefault();
+        // Validate that all fields are filled
         if (!bookData.bookName || !bookData.description || !bookData.author || !bookData.price || !bookData.image) {
             alert('All fields are required.');
             return;
         }
 
         try {
+            // Send a POST request to the server with the book data
             await axios.post('/api/add', bookData, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
             console.log('Book data submitted successfully');
+            // Reset book data state after successful submission
             setBookData({
                 bookName: '',
                 description: '',
@@ -61,6 +70,7 @@ export default function Admin() {
         }
     };
 
+    // handleLogout to remove authentication cookie and redirect to login page
     const handleLogout = () => {
         Cookies.remove('auth');
         router.push('/admin-login');

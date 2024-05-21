@@ -8,9 +8,9 @@ connectDB();
 
 export async function GET(){
     try {
-        const books= await Books.find();
+        const books= await Books.find();    // Find all the books in the database
 
-        return NextResponse.json({ books });
+        return NextResponse.json({ books });  // Return the books as a JSON response
     } catch (error) {
         console.error('Error fetching data:', error);
         return NextResponse.json({ message: 'Internal Server Error' });

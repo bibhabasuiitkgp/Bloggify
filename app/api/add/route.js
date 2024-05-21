@@ -14,7 +14,7 @@ export async function POST(request) {
         const { bookName, description, author, price, image } = body;
 
 
-        const newBook = new Books({
+        const newBook = new Books({ // Create a new book document
             book_name: bookName,
             description,
             author,

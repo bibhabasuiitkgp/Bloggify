@@ -8,7 +8,7 @@ connectDB();
 
 export async function DELETE(request, { params }) {
     try {
-        const { id } = params;
+        const { id } = params;  // Get the book ID from the request parameters
 
         // Find the book by ID and delete it
         const deletedBook = await Books.findByIdAndDelete(id);

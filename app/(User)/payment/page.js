@@ -5,25 +5,29 @@ import Buy from "./Buy";
 import { useRouter } from 'next/navigation';
 import Loading from "@/app/loading";
 
+// BuyProduct component to handle the payment process
 const BuyProduct = () => {
     const router = useRouter();
 
+    // makePayment function to initiate the payment process
     const makePayment = async ({ productId = null }) => {
-        const key = process.env.NEXT_PUBLIC_RAZORPAY_API_KEY;
-        console.log(key);
+        const key = process.env.NEXT_PUBLIC_RAZORPAY_API_KEY; // Razorpay API key from environment variables
 
         try {
+            // Fetch order details from the server
             const res = await fetch("/api/razorpay");
             const { order } = await res.json();
-            console.log(order.id);
 
+            // Razorpay payment options
             const options = {
                 key: key,
-                name: "StudySphere",
+                name: "Book_Wagon", // Name of the business
                 currency: order.currency,
-                amount: order.amount,
-                order_id: order.id,
+                amount: order.amount, // Payment amount
+                order_id: order.id, // Order ID from Razorpay
                 description: "Online learning platform",
+
+                // Handler function to verify payment after completion
                 handler: async function (response) {
                     console.log(response);
                     const verificationRes = await fetch("/api/paymentverify", {
@@ -35,26 +39,31 @@ const BuyProduct = () => {
                         }),
                     });
                     const resJson = await verificationRes.json();
-                    console.log("response verify==", resJson);
+                    // console.log("response verify==", resJson);
 
+                    // Redirect to dashboard if payment is successful
                     if (resJson?.message === "success") {
-                        console.log("Payment successful:", resJson);
+                        // console.log("Payment successful:", resJson);
                         router.push("/dashboard");
                     }
                 },
+
+                // Prefilled user information
                 prefill: {
-                    name: "studysphere",
-                    email: "studysphere@gmail.com",
+                    name: "Bookwagon",
+                    email: "Bookwagon@gmail.com",
                     contact: "0000000000",
                 },
             };
 
+            // Create a new Razorpay payment object and open the payment window
             const paymentObject = new window.Razorpay(options);
             paymentObject.open();
 
-            //   paymentObject.on("payment.failed", function (response) {
-            //     alert("Payment failed. Please try again. Contact support for help.");
-            //   });
+            // Uncomment the below code to handle payment failures
+            paymentObject.on("payment.failed", function (response) {
+                alert("Payment failed. Please try again. Contact support for help.");
+            });
         } catch (error) {
             console.error("Payment initiation failed:", error);
         }
@@ -62,6 +71,7 @@ const BuyProduct = () => {
 
     return (
         <>
+            {/* Suspense to show loading spinner while Buy component is loading */}
             <Suspense fallback={<Loading />}>
                 <Buy makePayment={makePayment} />
             </Suspense>
