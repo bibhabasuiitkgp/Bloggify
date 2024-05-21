@@ -28,7 +28,6 @@ export default function Admin() {
             });
 
             console.log('Book data submitted successfully');
-            // Optionally, you can reset the form fields after successful submission
             setBookData({
                 bookName: '',
                 description: '',
