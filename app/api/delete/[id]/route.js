@@ -1,6 +1,5 @@
-// pages/api/books/[id].js
 import connectDB from '../../../database/ConnectDB';
-import Books from '../../../database/BooksSchema';
+import Blogs from '../../../database/BlogSchema';
 import { NextResponse } from 'next/server';
 
 // Connect to MongoDB
@@ -8,18 +7,18 @@ connectDB();
 
 export async function DELETE(request, { params }) {
     try {
-        const { id } = params;  // Get the book ID from the request parameters
+        const { id } = params; // Get the blog ID from the request parameters
 
-        // Find the book by ID and delete it
-        const deletedBook = await Books.findByIdAndDelete(id);
+        // Find the blog by ID and delete it
+        const deletedBlog = await Blogs.findByIdAndDelete(id);
 
-        // If the book is not found
-        if (!deletedBook) {
-            return NextResponse.json({ success: false, message: 'Book not found' }, { status: 404 });
+        // If the blog is not found
+        if (!deletedBlog) {
+            return NextResponse.json({ success: false, message: 'Blog not found' }, { status: 404 });
         }
 
         // Return success response
-        return NextResponse.json({ success: true, message: 'Book deleted successfully',data:deletedBook }, { status: 200 });
+        return NextResponse.json({ success: true, message: 'Blog deleted successfully' }, { status: 200 });
     } catch (error) {
         console.error(error);
         return NextResponse.json({ success: false, message: 'Server Error' }, { status: 500 });

@@ -8,16 +8,8 @@ export default function Home() {
   return (
     <div>
       <header>
-        <nav className="header__navegation">
-          <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Contact</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Help</a></li>
-          </ul>
-        </nav>
         <div className="header__content">
-          <h1>Books are the mirrors of the soul,<br /> reflecting worlds beyond <br /> imaginationand whispers of <br /> timeless wisdom.</h1>
+          <h1><span className='span'>Bloggify: </span>Your platform to express,<br /> inspire, and connect. Share your stories,<br/> amplify your voice, and join a global community...</h1>
           <SignedOut>
             <div className='buttons'>
               <Link href="/Sign-up">
@@ -30,8 +22,8 @@ export default function Home() {
           </SignedOut>
 
           <SignedIn>
-            <Link href="/dashboard">
-              <button class="btn-5">Dashboard</button>
+            <Link href="/home">
+              <button class="btn-5">Blogs</button>
             </Link>
           </SignedIn>
         </div>
