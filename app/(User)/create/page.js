@@ -1,10 +1,7 @@
-// (user)/create/page.js
 "use client";
 
 import './styles.css';
 import React, { useState } from 'react';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { useRouter } from 'next/navigation';
 
 export default function Home() {
@@ -20,6 +17,11 @@ export default function Home() {
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
+
+    const handleContentChange = (e) => {
+        setEditorData(e.target.value);
+    };
+
     const handleClick = () => {
         router.push(`/home`);
     };
@@ -67,18 +69,7 @@ export default function Home() {
                 </div>
                 <div className="form-group">
                     <label htmlFor="content">Content</label>
-                    <div>
-                        <CKEditor
-                            id="content"
-                            name="content"
-                            editor={ClassicEditor}
-                            data={editorData}
-                            onChange={(event, editor) => {
-                                const data = editor.getData();
-                                setEditorData(data);
-                            }}
-                        />
-                    </div>
+                    <textarea id="content" name="content" value={editorData} onChange={handleContentChange} required />
                 </div>
                 <div className="form-group">
                     <label htmlFor="image">Image URL</label>

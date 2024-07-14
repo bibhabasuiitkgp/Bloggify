@@ -2,15 +2,12 @@
 
 import './styles.css';
 import React, { useEffect, useState } from 'react';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { useRouter } from 'next/navigation';
 
 const Home = ({ params }) => {
     const router = useRouter();
     const id = params.id;
-    console.log(id);
-    console.log("123");
+    
     const [editorData, setEditorData] = useState('');
     const [formData, setFormData] = useState({
         category: '',
@@ -18,10 +15,6 @@ const Home = ({ params }) => {
         heading: '',
         image: ''
     });
-
-    const handleClick = () => {
-        router.push(`/detail/${id}`);
-    };
 
     useEffect(() => {
         if (id) {
@@ -35,7 +28,6 @@ const Home = ({ params }) => {
                         heading: blog.heading,
                         image: blog.image
                     });
-                    console.log(blog);
                     setEditorData(blog.content);
                 })
                 .catch(error => console.error('Error fetching blog:', error));
@@ -46,8 +38,15 @@ const Home = ({ params }) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    const handleEditorChange = (e) => {
+        const data = e.target.value;
+        setEditorData(data);
+    };
+    
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        
         const data = { ...formData, content: editorData };
 
         try {
@@ -71,6 +70,10 @@ const Home = ({ params }) => {
         }
     };
 
+    const handleClick = () => {
+        router.push(`/detail/${id}`);
+    };
+
     return (
         <div className="container">
             <h1>{id ? 'Update' : 'Create'} a Blog Post</h1>
@@ -89,18 +92,7 @@ const Home = ({ params }) => {
                 </div>
                 <div className="form-group">
                     <label htmlFor="content">Content</label>
-                    <div>
-                        <CKEditor
-                            id="content"
-                            name="content"
-                            editor={ClassicEditor}
-                            data={editorData}
-                            onChange={(event, editor) => {
-                                const data = editor.getData();
-                                setEditorData(data);
-                            }}
-                        />
-                    </div>
+                    <textarea id="content" name="content" value={editorData} onChange={handleEditorChange} rows={10} required />
                 </div>
                 <div className="form-group">
                     <label htmlFor="image">Image URL</label>

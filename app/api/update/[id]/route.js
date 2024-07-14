@@ -1,6 +1,7 @@
 import connectDB from '../../../database/ConnectDB';
 import Blogs from '../../../database/BlogSchema';
 import { NextResponse } from 'next/server';
+import axios from "axios";
 
 // Connect to MongoDB
 connectDB();
