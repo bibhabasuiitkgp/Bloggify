@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import {UserButton} from '@clerk/nextjs';
+import { UserButton } from '@clerk/nextjs';
 import './styles.css';
 
 const Page = () => {
@@ -11,7 +11,9 @@ const Page = () => {
 
     async function fetchData() {
         try {
-            const response = await fetch('/api/get');
+            const response = await fetch('/api/get', {
+                next: { revalidate: 3 },
+            });
             if (!response.ok) {
                 throw new Error('Failed to fetch data');
             }
