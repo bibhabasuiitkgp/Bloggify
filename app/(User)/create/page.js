@@ -18,6 +18,7 @@ export default function Home() {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    
     const handleContentChange = (e) => {
         setEditorData(e.target.value);
     };
