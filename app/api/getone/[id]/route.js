@@ -3,13 +3,13 @@ import connectDB from '../../../database/ConnectDB';
 import { NextResponse } from 'next/server';
 
 export async function GET(request, { params}) {
-    await connectDB
+    await connectDB()
     
     try {
-        // console.log("blog");
+        console.log("blog");
         const { id } = params;
         const blog = await BlogSchema.findById(id);
-        // console.log(blog);
+        console.log(blog);
 
         if (!blog) {
             return NextResponse.json({ success: false, message: 'Blog not found' }, { status: 404 });

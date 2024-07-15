@@ -4,7 +4,6 @@ import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import './styles.css';
-
 const BlogDetail = ({ params }) => {
     const id = params.id;
     const router = useRouter();
@@ -22,11 +21,9 @@ const BlogDetail = ({ params }) => {
     if (!blog) {
         return <div>Loading...</div>;
     }
-
     const handleUpdate = () => {
         router.push(`/update/${id}`);
     };
-
     const handleDelete = async () => {
         if (confirm('Are you sure you want to delete this blog post?')) {
             try {
@@ -46,7 +43,6 @@ const BlogDetail = ({ params }) => {
             }
         }
     };
-
     return (
         <>
             <Head>
@@ -65,7 +61,7 @@ const BlogDetail = ({ params }) => {
                     </section>
                     <section className="text-block rich-text">
                         <h1 className='heading'>{blog.heading}</h1>
-                        <div className='content' dangerouslySetInnerHTML={{ __html: blog.content }} />
+                        <div className='content'>{blog.content}</div>
                     </section>
                     <div className="button-container">
                         <button className="btn-5" onClick={handleUpdate}>Update</button>
