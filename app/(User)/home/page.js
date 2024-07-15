@@ -13,6 +13,7 @@ const Page = () => {
         try {
             const response = await fetch('/api/get', {
                 next: { revalidate: 3 },
+                cache: 'no-store'
             });
             if (!response.ok) {
                 throw new Error('Failed to fetch data');
