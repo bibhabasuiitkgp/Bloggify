@@ -61,7 +61,7 @@ const BlogDetail = ({ params }) => {
                     </section>
                     <section className="text-block rich-text">
                         <h1 className='heading'>{blog.heading}</h1>
-                        <div className='content'>{blog.content}</div>
+                        <div className='content' dangerouslySetInnerHTML={{ __html: blog.content }} />
                     </section>
                     <div className="button-container">
                         <button className="btn-5" onClick={handleUpdate}>Update</button>
